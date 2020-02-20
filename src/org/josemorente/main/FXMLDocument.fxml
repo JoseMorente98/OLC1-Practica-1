@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="982.0" prefWidth="1860.9998779296875" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="org.josemorente.main.FXMLDocumentController">
+  <children>
+    <HBox layoutX="0.0" layoutY="0.0" prefHeight="30.0" prefWidth="1861.0" />
+    <MenuBar layoutX="0.0" layoutY="0.0" prefWidth="1861.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#cargar_archivo" text="Abrir Archivo" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Delete" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <VBox layoutX="0.0" layoutY="30.0" prefHeight="736.0" prefWidth="767.0" styleClass="stackpane">
+      <children>
+        <HBox alignment="CENTER_LEFT" prefWidth="544.0">
+          <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ARCHIVO DE ENTRADA">
+              <fill>
+                <Color blue="0.376" green="0.329" red="0.282" fx:id="x2" />
+              </fill>
+              <font>
+                <Font name="Corbel Bold" size="20.0" fx:id="x3" />
+              </font>
+            </Text>
+            <HBox HBox.hgrow="ALWAYS" />
+          </children>
+          <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+          </padding>
+        </HBox>
+        <TextArea fx:id="arearegular" prefHeight="502.0" prefWidth="767.0" wrapText="true">
+          <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+          </VBox.margin>
+        </TextArea>
+        <HBox prefHeight="100.0" prefWidth="200.0">
+          <children>
+            <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="162.0" styleClass="success-buttton, primary-buttton" text="Generar Automata">
+              <HBox.margin>
+                <Insets left="150.0" top="30.0" fx:id="x1" />
+              </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="147.0" styleClass="success-buttton" text="Analiza Entrada" onAction="#analizar_entrada" HBox.margin="$x1" />
+          </children>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" prefWidth="544.0">
+          <children>
+            <Text fill="$x2" font="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="SALIDA">
+              <HBox.margin>
+                <Insets left="20.0" />
+              </HBox.margin>
+            </Text>
+            <HBox HBox.hgrow="ALWAYS" />
+          </children>
+          <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+          </padding>
+        </HBox>
+      </children>
+    </VBox>
+    <VBox layoutX="767.0" layoutY="30.0" prefHeight="736.0" prefWidth="382.0" styleClass=", stackpane">
+      <children>
+        <VBox prefHeight="671.0" prefWidth="382.0" styleClass=", regexview">
+          <VBox.margin>
+            <Insets bottom="65.0" left="25.0" right="25.0" top="65.0" />
+          </VBox.margin>
+        </VBox>
+      </children>
+    </VBox>
+    <VBox layoutX="1149.0" layoutY="30.0" prefHeight="736.0" prefWidth="711.9998779296875" styleClass=", stackpane">
+      <children>
+        <HBox prefHeight="65.0" prefWidth="712.0" />
+        <HBox prefHeight="47.0" prefWidth="576.0" styleClass="regexview">
+          <children>
+            <ComboBox fx:id="combo" prefWidth="597.0" styleClass="combo-box-popup, ">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+              <HBox.margin>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+              </HBox.margin>
+            </ComboBox>
+          </children>
+          <VBox.margin>
+            <Insets bottom="50.0" left="50.0" right="50.0" />
+          </VBox.margin>
+        </HBox>
+      </children>
+    </VBox>
+    <HBox layoutX="14.0" layoutY="766.0" prefHeight="216.0" prefWidth="1833.0">
+      <children>
+        <TextArea prefHeight="216.0" prefWidth="1847.0" wrapText="true">
+          <HBox.margin>
+            <Insets bottom="25.0" left="20.0" right="20.0" top="25.0" />
+          </HBox.margin>
+        </TextArea>
+      </children>
+    </HBox>
+  </children>
+  <stylesheets>
+    <URL value="@../resources/style.css" />
+  </stylesheets>
+</AnchorPane>
