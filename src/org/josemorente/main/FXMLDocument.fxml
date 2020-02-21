@@ -1,79 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.collections.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="982.0" prefWidth="1860.9998779296875" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="org.josemorente.main.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="982.0" prefWidth="1860.9998779296875" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.josemorente.main.FXMLDocumentController">
   <children>
-    <HBox layoutX="0.0" layoutY="0.0" prefHeight="30.0" prefWidth="1861.0" />
+    <HBox layoutX="0.0" layoutY="0.0" prefHeight="30.0" prefWidth="1861.0" style="-fx-background-color: #1d1d1d;" />
     <MenuBar layoutX="0.0" layoutY="0.0" prefWidth="1861.0">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="Archivo">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#cargar_archivo" text="Abrir Archivo" />
+            <MenuItem mnemonicParsing="false" onAction="#cargarArchivo" text="Abrir" />
+          </items>
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#guardarComoArchivo" text="Guardar Como" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
+        <Menu mnemonicParsing="false" text="Reportes">
           <items>
             <MenuItem mnemonicParsing="false" text="Delete" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About" />
-          </items>
-        </Menu>
       </menus>
     </MenuBar>
-    <VBox layoutX="0.0" layoutY="30.0" prefHeight="736.0" prefWidth="767.0" styleClass="stackpane">
+    <VBox layoutX="0.0" layoutY="30.0" prefHeight="736.0" prefWidth="767.0" style="-fx-background-color: #1d1d1d;" styleClass="stackpane">
       <children>
-        <HBox alignment="CENTER_LEFT" prefWidth="544.0">
+        <HBox alignment="CENTER_LEFT" prefWidth="544.0" style="-fx-background-color: #1d1d1d;">
           <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ARCHIVO DE ENTRADA">
-              <fill>
-                <Color blue="0.376" green="0.329" red="0.282" fx:id="x2" />
-              </fill>
+            <Text fill="WHITE" strokeWidth="0.0" text="Práctica No. 1">
               <font>
-                <Font name="Corbel Bold" size="20.0" fx:id="x3" />
+                <Font name="Segoe UI Light" size="60.0" fx:id="x3" />
               </font>
             </Text>
-            <HBox HBox.hgrow="ALWAYS" />
           </children>
           <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
           </padding>
         </HBox>
-        <TextArea fx:id="arearegular" prefHeight="502.0" prefWidth="767.0" wrapText="true">
+        <HBox alignment="CENTER_LEFT" prefWidth="544.0" style="-fx-background-color: #1d1d1d;">
+          <children>
+            <Text fill="WHITE" strokeWidth="0.0" text="Archivo De Entrada">
+              <HBox.margin>
+                <Insets left="20.0" />
+              </HBox.margin>
+                     <font>
+                        <Font name="Segoe UI Light" size="20.0" />
+                     </font>
+            </Text>
+          </children>
+          <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+          </padding>
+        </HBox>
+        <TextArea fx:id="textAreaEntrada" prefHeight="502.0" prefWidth="767.0" wrapText="true">
           <VBox.margin>
             <Insets left="20.0" right="20.0" />
           </VBox.margin>
         </TextArea>
         <HBox prefHeight="100.0" prefWidth="200.0">
           <children>
-            <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="162.0" styleClass="success-buttton, primary-buttton" text="Generar Automata">
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="175.0" text="Generar Automata">
               <HBox.margin>
                 <Insets left="150.0" top="30.0" fx:id="x1" />
               </HBox.margin>
+                     <font>
+                        <Font name="Segoe UI Light" size="20.0" />
+                     </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="147.0" styleClass="success-buttton" text="Analiza Entrada" onAction="#analizar_entrada" HBox.margin="$x1" />
+            <Button mnemonicParsing="false" onAction="#scannearEntrada" prefHeight="50.0" prefWidth="175.0" styleClass="success-buttton" text="Analiza Entrada">
+                     <font>
+                        <Font name="Segoe UI Light" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="150.0" top="30.0" fx:id="x4" />
+                     </HBox.margin></Button>
           </children>
         </HBox>
         <HBox alignment="CENTER_LEFT" prefWidth="544.0">
           <children>
-            <Text fill="$x2" font="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="SALIDA">
+            <Text strokeWidth="0.0" text="Salida">
               <HBox.margin>
                 <Insets left="20.0" />
               </HBox.margin>
+                     <font>
+                        <Font name="Segoe UI Light" size="20.0" />
+                     </font>
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#d8dde8" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </fill>
             </Text>
-            <HBox HBox.hgrow="ALWAYS" />
           </children>
           <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -81,16 +118,37 @@
         </HBox>
       </children>
     </VBox>
-    <VBox layoutX="767.0" layoutY="30.0" prefHeight="736.0" prefWidth="382.0" styleClass=", stackpane">
+    <VBox layoutX="767.0" layoutY="30.0" prefHeight="736.0" prefWidth="382.0" style="-fx-background-color: #1d1d1d;" styleClass=", stackpane">
       <children>
         <VBox prefHeight="671.0" prefWidth="382.0" styleClass=", regexview">
           <VBox.margin>
             <Insets bottom="65.0" left="25.0" right="25.0" top="65.0" />
           </VBox.margin>
+               <children>
+                  <Accordion>
+                    <panes>
+                      <TitledPane animated="false" text="untitled 1">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="untitled 2">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="untitled 3">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </TitledPane>
+                    </panes>
+                  </Accordion>
+               </children>
         </VBox>
       </children>
     </VBox>
-    <VBox layoutX="1149.0" layoutY="30.0" prefHeight="736.0" prefWidth="711.9998779296875" styleClass=", stackpane">
+    <VBox layoutX="1149.0" layoutY="30.0" prefHeight="736.0" prefWidth="711.9998779296875" style="-fx-background-color: #1d1d1d;" styleClass=", stackpane">
       <children>
         <HBox prefHeight="65.0" prefWidth="712.0" />
         <HBox prefHeight="47.0" prefWidth="576.0" styleClass="regexview">
@@ -114,13 +172,13 @@
         </HBox>
       </children>
     </VBox>
-    <HBox layoutX="14.0" layoutY="766.0" prefHeight="216.0" prefWidth="1833.0">
+    <HBox layoutX="-2.0" layoutY="766.0" prefHeight="216.0" prefWidth="1862.0" style="-fx-background-color: #1d1d1d;">
       <children>
-        <TextArea prefHeight="216.0" prefWidth="1847.0" wrapText="true">
-          <HBox.margin>
-            <Insets bottom="25.0" left="20.0" right="20.0" top="25.0" />
-          </HBox.margin>
-        </TextArea>
+            <TextArea prefHeight="700.0" prefWidth="1847.0" wrapText="true">
+               <HBox.margin>
+                  <Insets bottom="25.0" left="20.0" right="20.0" top="25.0" />
+               </HBox.margin>
+            </TextArea>
       </children>
     </HBox>
   </children>
