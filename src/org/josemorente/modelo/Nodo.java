@@ -17,29 +17,44 @@ public class Nodo {
     private String elemento;
     private String primero;
     private String ultimo;
-    private boolean anulable;
+    private boolean esAnulable;
+    private boolean esHoja;
     private Nodo nodoDerecho;
     private Nodo nodoIzquierdo;
+    private static int contador = 1;
 
     public Nodo() {
     }
 
-    public Nodo(int indice, String elemento, String primero, String ultimo, boolean anulable, Nodo nodoDerecho, Nodo nodoIzquierdo) {
-        this.indice = indice;
+    public Nodo(String elemento, String primero, String ultimo, boolean esAnulable, boolean esHoja, Nodo nodoDerecho, Nodo nodoIzquierdo) {
+        this.indice = contador++;
         this.elemento = elemento;
         this.primero = primero;
         this.ultimo = ultimo;
-        this.anulable = anulable;
+        this.esAnulable = esAnulable;
+        this.esHoja = esHoja;
         this.nodoDerecho = nodoDerecho;
         this.nodoIzquierdo = nodoIzquierdo;
     }
     
-    public Nodo(int indice, String elemento) {
-        this.indice = indice;
+    public Nodo(String elemento, boolean esAnulable, Nodo nodoDerecho, Nodo nodoIzquierdo) {
+        this.indice = contador++;
         this.elemento = elemento;
-        this.primero = "0";
-        this.ultimo = "0";
-        this.anulable = false;
+        this.primero = "";
+        this.ultimo = "";
+        this.esAnulable = esAnulable;
+        this.esHoja = false;
+        this.nodoDerecho = nodoDerecho;
+        this.nodoIzquierdo = nodoIzquierdo;
+    }
+    
+    public Nodo(String elemento) {
+        this.indice = contador++;
+        this.elemento = elemento;
+        this.primero = "";
+        this.ultimo = "";
+        this.esAnulable = false;
+        this.esHoja = false;
         this.nodoDerecho = null;
         this.nodoIzquierdo = null;
     }
@@ -101,17 +116,31 @@ public class Nodo {
     }
 
     /**
-     * @return the anulable
+     * @return the esAnulable
      */
-    public boolean isAnulable() {
-        return anulable;
+    public boolean isEsAnulable() {
+        return esAnulable;
     }
 
     /**
-     * @param anulable the anulable to set
+     * @param esAnulable the esAnulable to set
      */
-    public void setAnulable(boolean anulable) {
-        this.anulable = anulable;
+    public void setEsAnulable(boolean esAnulable) {
+        this.esAnulable = esAnulable;
+    }
+
+    /**
+     * @return the esHoja
+     */
+    public boolean isEsHoja() {
+        return esHoja;
+    }
+
+    /**
+     * @param esHoja the esHoja to set
+     */
+    public void setEsHoja(boolean esHoja) {
+        this.esHoja = esHoja;
     }
 
     /**
@@ -143,78 +172,92 @@ public class Nodo {
     }
     
     /**
-     * IMPRIMIR NODOS
-     * @param path
+     * @param nombre
      */
-    public void Imprimir(String path) {
-        FileWriter file = null;
-        PrintWriter writer;
-        try
-        {
-            file = new FileWriter("aux_grafico.dot");
-            writer = new PrintWriter(file);
-            writer.print(getGrafoArbol());
-        } 
-        catch (Exception e){
-            System.err.println("Error al escribir el archivo aux_grafico.dot");
-        }finally{
-           try {
-                if (null != file)
-                    file.close();
-           }catch (Exception e2){
-               System.err.println("Error al cerrar el archivo aux_grafico.dot");
-           } 
-        }                        
-        try{
-          Runtime rt = Runtime.getRuntime();          
-          rt.exec( "dot -Tjpg -o "+path+" aux_grafico.dot");
-          Thread.sleep(500);
-        } catch (Exception ex) {
-            System.out.println(ex);
-            System.err.println("Error al generar la imagen para el archivo aux_grafico.dot");
-        }            
-    }
-    
-    /**
-     * GENERAR ARBOL
-     * @param path
-     */
-    private String getGrafoArbol() {
-        return "digraph grafica{\n" +
-               "rankdir=TB;\n" +
-               "node [shape = record, style=filled, fillcolor=seashell2];\n"+
-                getCuerpo()+
-                "}\n";
-    }
-    
-    /**
-     * OBTENER CUERPO GRAFO
-     */
-    private String getCuerpo() {
-        String textoNodo;
-        String str = elemento.replace('"', ' ');
-        String anuable  = "F";
+    public void generarGrafoArbol(String nombre) {    
+        FileWriter fileWriter;
+        PrintWriter printWriter;
+        Runtime runtime;
+        fileWriter = null;
         
-        if (str.equals("|")) {
-            str = "or";
-        } 
-        if (isAnulable()) {
-            anuable = "V";
+        try {
+            fileWriter = new FileWriter("grafo-arbol.dot");
+            
+            printWriter = new PrintWriter(fileWriter);
+            
+            printWriter.print(obtenerDocumento());
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(fileWriter != null) {
+                    fileWriter.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         
-        if(nodoIzquierdo==null && nodoDerecho==null){
-             textoNodo="nodo"+indice+" [ label =\""+primero+"|"+str +"\\l"+ anuable  +"|"+ultimo+"\"];\n";
+        try {
+            runtime = Runtime.getRuntime();
+            runtime.exec( "dot -Tjpg -o "+nombre+"Arbol.png grafo-arbol.dot");
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * @return String
+     */
+    private String obtenerDocumento() {
+        String cabezaGrafo = "digraph grafica{\n" +
+            "rankdir=TB;\n" +
+            "node [fillcolor=firebrick3, shape=record, style=bold];\n";
+                
+        String cuerpoGrafo = obtenerNodo();
+        
+        String pieGrafo = "}";
+        
+        return cabezaGrafo + cuerpoGrafo + pieGrafo;
+    }
+    
+    /**
+     * @return lineaTexto
+     */
+    public String obtenerNodo() {
+        String elementoNodo = this.getElemento().replace('"', ' ');
+        String lineaTexto;
+        
+        if (elementoNodo.equals("|")) {
+            elementoNodo = "O";
+        }
+        
+        if(nodoIzquierdo == null && nodoDerecho == null){
+            if(isEsAnulable()) {
+                lineaTexto = "Hoja"+indice+" [ label =\""+primero+"|"+elementoNodo +"\\lV|"+ultimo+"\"];\n";
+            } else {
+                lineaTexto = "Hoja"+indice+" [ label =\""+primero+"|"+elementoNodo +"\\lF|"+ultimo+"\"];\n";
+            }
+             
         }else{
-             textoNodo="nodo"+indice+" [ label =\""+primero+"|"+ str +"\\l"+ anuable   +"|"+ultimo+"\"];\n";
+            if(isEsAnulable()) {
+                lineaTexto = "Hoja"+indice+" [ label =\""+primero+"|"+elementoNodo +"\\lV|"+ultimo+"\"];\n";
+            } else {
+                lineaTexto = "Hoja"+indice+" [ label =\""+primero+"|"+elementoNodo +"\\lF|"+ultimo+"\"];\n";
+            }
         }
-        if(nodoIzquierdo!=null){
-            textoNodo=textoNodo + nodoIzquierdo.getCuerpo() +
-               "nodo"+indice+"->nodo"+nodoIzquierdo.indice +"\n";
+        if(nodoIzquierdo != null){
+            lineaTexto = lineaTexto + nodoIzquierdo.obtenerNodo() +
+               "Hoja"+indice+"->Hoja"+nodoIzquierdo.indice +"\n";
         }
-        if(nodoDerecho!=null){
-            textoNodo=textoNodo + nodoDerecho.getCuerpo() +
-               "nodo"+indice+"->nodo"+nodoDerecho.indice+"\n";                    
+        if(nodoDerecho != null){
+            lineaTexto = lineaTexto + nodoDerecho.obtenerNodo() +
+               "Hoja"+indice+"->Hoja"+nodoDerecho.indice+"\n";                    
         }
-        return textoNodo;
+        
+        return lineaTexto;
     } 
+    
 }

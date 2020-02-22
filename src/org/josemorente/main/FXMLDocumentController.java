@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.josemorente.controlador.ControladorArbol;
 import org.josemorente.controlador.ControladorLexico;
 import org.josemorente.controlador.ControladorToken;
 
@@ -121,6 +122,12 @@ public class FXMLDocumentController implements Initializable {
     private void scannearEntrada(ActionEvent event) {
         ControladorToken.getInstance().limpiarArrayList();
         ControladorLexico.getInstance().scanner(textAreaEntrada.getText());
+        
+        if(ControladorToken.getInstance().getArrayListTokenError().size() > 0) {
+            
+        } else {
+            ControladorArbol.getInstance().generarArbol();
+        }
         
         /*for(Token token: TokenController.getInstancia().getArrayListTokens()) {
             if (token.getDescripcion().equals("TK_Simbolo")) {
