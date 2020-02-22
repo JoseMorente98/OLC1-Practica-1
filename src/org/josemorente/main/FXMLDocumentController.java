@@ -17,13 +17,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.josemorente.controlador.ControladorArbol;
 import org.josemorente.controlador.ControladorLexico;
 import org.josemorente.controlador.ControladorToken;
+import org.josemorente.modelo.Token;
 
 /**
  *
@@ -124,17 +124,13 @@ public class FXMLDocumentController implements Initializable {
         ControladorLexico.getInstance().scanner(textAreaEntrada.getText());
         
         if(ControladorToken.getInstance().getArrayListTokenError().size() > 0) {
-            
+            System.err.println("ERRORES ENCONTRADOS");
+            for (Token t : ControladorToken.getInstance().getArrayListTokenError()) {
+                System.out.println(t);
+            }
         } else {
             ControladorArbol.getInstance().generarArbol();
         }
-        
-        /*for(Token token: TokenController.getInstancia().getArrayListTokens()) {
-            if (token.getDescripcion().equals("TK_Simbolo")) {
-                System.out.println(token);            
-            }
-        }*/
-        //SetController.getInstancia().assemble_Sets();
     }
     
 }
