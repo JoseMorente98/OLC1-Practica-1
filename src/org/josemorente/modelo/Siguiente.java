@@ -65,4 +65,14 @@ public class Siguiente {
         this.siguientes = siguientes;
     }
     
+    @Override
+    public String toString() {
+        return "SIGUIENTE { \n"
+            + "    ID: "+ idSiguiente + "\n"
+            + "    Elementos: " + nombre + "\n" 
+            + "    Elementos: " + siguientes + "\n"
+
+            + "}";
+    }
+    
 }

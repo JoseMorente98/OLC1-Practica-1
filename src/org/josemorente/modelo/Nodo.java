@@ -40,8 +40,8 @@ public class Nodo {
     public Nodo(String elemento, boolean esAnulable, Nodo nodoDerecho, Nodo nodoIzquierdo) {
         this.indice = contador++;
         this.elemento = elemento;
-        this.primero = "";
-        this.ultimo = "";
+        this.primero = "0";
+        this.ultimo = "0";
         this.esAnulable = esAnulable;
         this.esHoja = false;
         this.nodoDerecho = nodoDerecho;
@@ -51,8 +51,8 @@ public class Nodo {
     public Nodo(String elemento) {
         this.indice = contador++;
         this.elemento = elemento;
-        this.primero = "";
-        this.ultimo = "";
+        this.primero = "0";
+        this.ultimo = "0";
         this.esAnulable = false;
         this.esHoja = false;
         this.nodoDerecho = null;

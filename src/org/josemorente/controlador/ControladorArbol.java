@@ -44,7 +44,6 @@ public class ControladorArbol {
                 }
 
                 if (arrayList.get(x+1) != null && arrayList.get(x+1).getLexema().equals(".")) {
-                    //itera en la expresion y guarda los elementos
                     for (int y = x+1; y < arrayList.size(); y++) {
                         if (!arrayList.get(y).getLexema().equals(";")) {
                             if (!arrayList.get(y).getLexema().equals("{") && !arrayList.get(y).getLexema().equals("}")) {
@@ -53,12 +52,6 @@ public class ControladorArbol {
                         } else {
                             ControladorNodo.getInstance().construirArbol(texto);
                             ControladorNodo.getInstance().limpiarVariables();
-                            //Llama al metodo Reordering para armar el arbol de expresion regular
-                            /*NodeController.getInstancia().Reordering(texto);
-                            NodeController.getInstancia().InsertElement(texto+"Tree", texto+"Table", texto+"Transition", texto+"Afd");
-                            NodeController.getInstancia().getState();
-                            ExpresionTreeController.getInstancia().Insert(texto, NodeController.getInstancia().getRoot(), NodeController.getInstancia().getFollowList());
-                            NodeController.getInstancia().clearList();*/
                             x = y;
                             break;
                         }

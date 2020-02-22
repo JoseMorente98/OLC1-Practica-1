@@ -5,6 +5,8 @@
  */
 package org.josemorente.controlador;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;import java.util.Stack;
 import org.josemorente.modelo.Nodo;
 import org.josemorente.modelo.Siguiente;
@@ -21,10 +23,10 @@ public class ControladorNodo {
     ArrayList<String> arrayListAuxiliarER;
     ArrayList<Siguiente> arrayListS;
     Stack stackArbol;
-    int contador;
-    int contadorHijo; 
+    int contadorSiguiente = 0;
+    int contadorHijo = 1; 
     Nodo nodoRaiz;
-    String nombreHoja;
+    String nombreHoja = "";
     
     private ControladorNodo() {
         arrayListER = new ArrayList<>();        
@@ -32,9 +34,6 @@ public class ControladorNodo {
         arrayListS = new ArrayList<>();
         stackArbol = new Stack();
         nodoRaiz = null;
-        contador = 0;
-        contadorHijo = 1;
-        nombreHoja = "";
     }
     
     public static ControladorNodo getInstance() {
@@ -51,7 +50,7 @@ public class ControladorNodo {
      */
     public void limpiarVariables() {
         nodoRaiz = null;
-        contador = 0;
+        contadorSiguiente = 0;
         contadorHijo = 1;
         arrayListER.clear();
         arrayListAuxiliarER.clear();
@@ -70,15 +69,15 @@ public class ControladorNodo {
     public void construirArbol(String nombre) {
         ArrayList<String> arrayList = arrayListER;
         if(nombre.length() == 0) {
-            nombre = "null" + contador;
+            nombre = "null" + contadorSiguiente;
         }
         
         for (int i = arrayListER.size() - 1; i >= 0; i--) {
             arrayListAuxiliarER.add(arrayListER.get(i));
         }
         
-        for (String texto: arrayListAuxiliarER) {
-            agregarPila(texto);
+        for (String cuerpoGrafo: arrayListAuxiliarER) {
+            agregarPila(cuerpoGrafo);
         }
         
         nodoRaiz = new Nodo(".", false, new Nodo("#"), (Nodo)stackArbol.pop());
@@ -93,10 +92,8 @@ public class ControladorNodo {
         
         //ARBOL
         nodoRaiz.generarGrafoArbol(nombre);
-        
-        
-        
-        contador++;
+        generarTablaSiguiente(nombre);
+        contadorSiguiente++;
     }
     
     
@@ -154,7 +151,7 @@ public class ControladorNodo {
             if (nodo.getNodoIzquierdo() == null && nodo.getNodoDerecho() == null) {
                 
 
-                //Le ingresa el anuable o no
+                //Le ingresa el anuable siguiente no
                 if (!nodo.getElemento().equals("epsilon")) {
                     nodo.setEsAnulable(false);
                 } else {
@@ -275,7 +272,7 @@ public class ControladorNodo {
                         obtenerTabla(f[i], nombreHoja, nodo.getNodoIzquierdo().getPrimero());                    
                     } else if (nodo.getElemento().equals(".")) {
                         obtenerElementoHoja(nodoRaiz, f[i]);
-                        obtenerTabla(f[i], nombreHoja, nodo.getNodoIzquierdo().getPrimero());
+                        obtenerTabla(f[i], nombreHoja, nodo.getNodoDerecho().getPrimero());
                     }
                 }
             }
@@ -289,36 +286,44 @@ public class ControladorNodo {
      * @param idSiguiente 
      * @param nombre
      * @param siguientes
-     */
+     */    
     public void obtenerTabla(String idSiguiente, String nombre, String siguientes){
-        int contador = 0;
+
+        int contadorSiguiente = 0;
         if (arrayListS.isEmpty()) {
             arrayListS.add(new Siguiente(idSiguiente, nombre, siguientes));
         } else {
-            for (Siguiente o : arrayListS) {
-                if (o.getIdSiguiente().equals(idSiguiente)) {
-                    contador++;
+            for (Siguiente siguiente : arrayListS) {
+                if (siguiente.getIdSiguiente().equals(idSiguiente)) {
+                    contadorSiguiente++;
                 }
             }
-            if (contador == 0) {
+            if (contadorSiguiente == 0) {
                 arrayListS.add(new Siguiente(idSiguiente, nombre, siguientes));
             }else {
-                for (Siguiente o : arrayListS) {
-                    if (o.getIdSiguiente().equals(idSiguiente)) {
-                        o.setSiguientes(siguientes + "," +o.getSiguientes());
+                for (Siguiente siguiente : arrayListS) {
+                    if (siguiente.getIdSiguiente().equals(idSiguiente)) {
+                        siguiente.setSiguientes(siguientes + "," +siguiente.getSiguientes());
                     }
                 }
             }
         }
-        int nodo = arrayListS.size();
-        for (int i = 0; i < nodo-1; i++){
-            for (int j = 0; j < nodo-i-1; j++){
-                if (Integer.parseInt(((Siguiente)arrayListS.get(j)).getIdSiguiente()) > Integer.parseInt(((Siguiente)arrayListS.get(j+1)).getIdSiguiente()))
+        
+        for (Siguiente object : arrayListS) {
+            System.out.println(object);
+        }
+        
+        int tamanio = arrayListS.size();
+        for (int i = 0; i < tamanio-1; i++){
+            for (int j = 0; j < tamanio-i-1; j++){
+                int a = Integer.parseInt(((Siguiente)arrayListS.get(j)).getIdSiguiente());
+                int b = Integer.parseInt(((Siguiente)arrayListS.get(j+1)).getIdSiguiente());
+                
+                if (a > b)
                 {
-                    Siguiente swap = arrayListS.get(j);
+                    Siguiente siguiente = arrayListS.get(j);
                     arrayListS.set(j, arrayListS.get(j + 1));
-                    arrayListS.set(j+1, swap);
-                    
+                    arrayListS.set(j+1, siguiente);
                 }
             }  
         }
@@ -342,5 +347,65 @@ public class ControladorNodo {
         }
     }
     
+    /**
+     * @param nombre
+     */
+    public void generarTablaSiguiente(String nombre) {    
+        FileWriter fileWriter;
+        PrintWriter printWriter;
+        Runtime runtime;
+        fileWriter = null;
+        
+        try {
+            fileWriter = new FileWriter("grafo-siguiente.dot");
+            
+            printWriter = new PrintWriter(fileWriter);
+            
+            printWriter.print(obtenerDocumento());
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(fileWriter != null) {
+                    fileWriter.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        try {
+            runtime = Runtime.getRuntime();
+            runtime.exec( "dot -Tjpg -o "+nombre+"Tabla.png grafo-siguiente.dot");
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private String obtenerDocumento() {
+        String cabezaGrafo = "digraph grafica{\n"
+            +"rankdir=TB;\n"
+            +"node [fillcolor=firebrick3, shape=record, style=bold];\n"
+            +"Tabla"+contadorHijo+" [ label =\""
+            + "{ Tabla de Siguientes |";
+        
+        String cuerpoGrafo = "";
+        String pieGrafo = "}"
+                + "\"];\n}\n";;
+        
+        
+        for (Siguiente rowTable : arrayListS) {
+            String str = rowTable.getNombre().replace('"', ' ');
+            cuerpoGrafo = cuerpoGrafo + "{"+str+"|<here> "+rowTable.getIdSiguiente()+"|"+rowTable.getSiguientes()+"}|";         
+        }
+        Siguiente r = arrayListS.get(arrayListS.size()-1);
+        int a = Integer.parseInt(r.getIdSiguiente())+1 ;
+        cuerpoGrafo = cuerpoGrafo + "{#|<here> "+ a +"|---}|"; 
+        
+         
+        return cabezaGrafo + cuerpoGrafo + pieGrafo;
+    }
     
 }
