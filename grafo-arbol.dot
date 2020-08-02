@@ -1,0 +1,35 @@
+digraph grafica{
+rankdir=TB;
+node [fillcolor=firebrick3, shape=record, style=bold];
+Hoja75 [ label ="1|.\lF|7"];
+Hoja73 [ label ="1|.\lF|6"];
+Hoja72 [ label ="1|+\lF|1"];
+Hoja71 [ label ="1|digito\lF|1"];
+Hoja72->Hoja71
+Hoja73->Hoja72
+Hoja70 [ label ="2,3,4,5|+\lF|6"];
+Hoja69 [ label ="2,3,4,5|.\lF|6"];
+Hoja68 [ label ="2,3,4,5|O\lF|2,3,4,5"];
+Hoja67 [ label ="2| + \lF|2"];
+Hoja68->Hoja67
+Hoja66 [ label ="3,4,5|O\lF|3,4,5"];
+Hoja65 [ label ="3| - \lF|3"];
+Hoja66->Hoja65
+Hoja64 [ label ="4,5|O\lF|4,5"];
+Hoja63 [ label ="4| * \lF|4"];
+Hoja64->Hoja63
+Hoja62 [ label ="5| / \lF|5"];
+Hoja64->Hoja62
+Hoja66->Hoja64
+Hoja68->Hoja66
+Hoja69->Hoja68
+Hoja61 [ label ="6|+\lF|6"];
+Hoja60 [ label ="6|digito\lF|6"];
+Hoja61->Hoja60
+Hoja69->Hoja61
+Hoja70->Hoja69
+Hoja73->Hoja70
+Hoja75->Hoja73
+Hoja74 [ label ="7|#\lF|7"];
+Hoja75->Hoja74
+}

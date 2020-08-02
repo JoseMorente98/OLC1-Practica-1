@@ -71,12 +71,20 @@ public class ControladorNodo {
         if(nombre.length() == 0) {
             nombre = "null" + contadorSiguiente;
         }
+                System.out.println("LISTA DE TOKEN");
+
+        for (String cuerpoGrafo: arrayListER) {
+            System.out.println(cuerpoGrafo);
+        }
         
         for (int i = arrayListER.size() - 1; i >= 0; i--) {
             arrayListAuxiliarER.add(arrayListER.get(i));
+            System.out.println(arrayListER.get(i));
         }
         
+        System.out.println("INSERCION DE PILA");
         for (String cuerpoGrafo: arrayListAuxiliarER) {
+            System.out.println(cuerpoGrafo);
             agregarPila(cuerpoGrafo);
         }
         
